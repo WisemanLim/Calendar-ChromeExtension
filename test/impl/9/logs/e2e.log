@@ -1,0 +1,13 @@
+extension id: jmgmcogidknkefcmaaiddljoajpcbpea
+Epic 6 — 온보딩
+  ✔ [E6] 최초 실행 시 온보딩 4단계 → 시작하기
+Epic 3 — 메인 캘린더
+Epic 4 — 이벤트 에디터
+Epic 5 — 수정·복사·삭제·검색
+Epic 6 — 설정·고객지원
+  ✔ [E8] Google 연동: 브라우저 로그인 계정 권한 요청 화면 · client ID 입력 → 권한 요청 버튼
+  ✔ [E6] 사이드패널 페이지(app.html?view=panel) 렌더
+
+E2E 3/3 PASS
+
+[exited with code 0]

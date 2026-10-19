@@ -27,19 +27,28 @@ iOS 소스(`Calendar-iOS/Calendar/*.swift`)를 기준으로 포팅했습니다.
 
 배포용 zip: `make package` → `dist/wise-calendar-<version>.zip` (Chrome 웹 스토어 업로드용)
 
-## Google Calendar 연동 설정 (선택)
+## Google Calendar 연동 (선택)
 
-로컬 저장만 쓸 경우 필요 없습니다. Google 연동은 OAuth 클라이언트가 있어야 합니다.
+설정(⚙) → 캘린더 연동 → **Google Calendar** 를 누르면 연동 화면이 열립니다.
 
-1. 확장 ID 고정: 개발자 대시보드/`chrome://extensions` 의 키로 `manifest.json` 에 `"key"` 추가(웹 스토어 등록 시 자동 고정)
-2. [Google Cloud Console](https://console.cloud.google.com/) → **Google Calendar API** 사용 설정
-3. OAuth 동의 화면 구성 → 범위 `calendar.events`, `calendar.readonly`
-4. 사용자 인증 정보 → **OAuth 클라이언트 ID** → 유형 **Chrome 확장 프로그램** → 항목 ID = 확장 ID
-5. `manifest.json` 의 `oauth2.client_id` 의 `YOUR_OAUTH_CLIENT_ID...` 를 발급받은 값으로 교체 → 확장 새로고침
-6. 확장 설정(⚙) → 캘린더 연동 → **Google Calendar** → 동의 → 표시할 캘린더 선택
+- **브라우저 로그인 계정** — Chrome 프로필에 로그인된 계정을 보여 주고, `[<계정> 계정으로 권한 요청]` 버튼으로 그 계정의 Google 동의 화면을 엽니다.
+- **요청 권한** — 캘린더 일정 보기·추가·수정·삭제(`calendar.events`), 캘린더 목록 보기(`calendar.readonly`).
+- 동의 후 표시할 캘린더를 고르면 끝. 새 이벤트는 기본 캘린더에 저장되고, 로컬 데이터는 옮겨지지 않습니다.
 
-client_id 가 설정되지 않으면 설정 화면에 `OAuth client_id 미설정` 안내가 나오고 로컬 저장을 유지합니다.
-새 이벤트는 기본(primary) 캘린더에 저장되고, 로컬 데이터는 Google 로 옮겨지지 않습니다.
+Google 은 앱마다 OAuth 클라이언트가 있어야 권한을 줍니다(최초 1회 등록). 두 방법 중 하나:
+
+**B) 설정 화면에 클라이언트 ID 입력 (manifest 수정 불필요, 권장)**
+1. [Google Cloud Console](https://console.cloud.google.com/) → **Google Calendar API** 사용 설정
+2. OAuth 동의 화면 구성 → 범위 `calendar.events`, `calendar.readonly` · 게시 상태가 '테스트'면 **테스트 사용자**에 사용할 계정 추가
+3. 사용자 인증 정보 → OAuth 클라이언트 ID → 유형 **웹 애플리케이션** → **승인된 리디렉션 URI** 에 연동 화면에 표시된 `https://<확장ID>.chromiumapp.org/` 등록
+4. 발급된 클라이언트 ID 를 연동 화면 입력칸에 붙여넣기 → 권한 요청 (계정 선택에 로그인 계정이 미리 지정됨)
+
+**A) manifest 에 Chrome 확장 유형 클라이언트 지정**
+1. `manifest.json` 에 `"key"` 를 추가해 확장 ID 고정(웹 스토어 등록 시 자동)
+2. OAuth 클라이언트 ID 유형 **Chrome 확장 프로그램**, 항목 ID = 확장 ID
+3. `oauth2.client_id` 의 `YOUR_OAUTH_CLIENT_ID...` 교체 → 확장 새로고침. 이후 Chrome 로그인 계정으로 바로 권한 요청(`getAuthToken`)
+
+클라이언트 ID 가 없으면 오류 대신 위 등록 절차와 확장 ID·리디렉션 URI(복사 버튼)를 보여 줍니다.
 
 ## 권한
 
@@ -48,7 +57,7 @@ client_id 가 설정되지 않으면 설정 화면에 `OAuth client_id 미설정
 | `storage`, `unlimitedStorage` | 설정·템플릿·로컬 이벤트·사진 저장 |
 | `alarms`, `notifications` | 이벤트 당일 09:00 알림 |
 | `sidePanel` | 사이드패널 표시 |
-| `identity` | Google 로그인(연동 시) |
+| `identity`, `identity.email` | Google 권한 요청, 브라우저 로그인 계정 표시(연동 시) |
 | `geolocation` | 날씨 조회용 위치 |
 | host: `api.open-meteo.com`, `www.googleapis.com` | 날씨, Google Calendar API |
 
@@ -89,6 +98,7 @@ Calendar-ChromeExtension/
 | `settings.notificationsEnabled` · `settings.onboardingCompleted` · `settings.lastSeenVersion` | 알림·온보딩 |
 | `settings.appColorScheme` | `system` / `dark` / `light` |
 | `settings.storageMode` · `settings.enabledCalendarIDs` | `local` / `google`, 표시 캘린더(빈 배열=전체) |
+| `settings.googleClientId` · `google.webToken` | 설정에 입력한 OAuth 클라이언트 ID, 웹 인증 토큰 캐시(만료 포함) |
 | `templates.v3` | 템플릿 |
 | `events.local.v1` | 로컬 이벤트(반복은 master+rule+exdates) |
 | `eventImage.<id>` | 사진 JPEG dataURL |
@@ -132,7 +142,7 @@ PLAYWRIGHT=/tmp/pw/node_modules/playwright node test/e2e/run.mjs test/e2e/out
 
 - **재렌더 시 시트·온보딩이 사라짐** — 메인 뷰가 `#app` 전체를 다시 그려 그 위의 오버레이까지 지웠음 → 메인 전용 호스트(`.main-host`)로 분리.
 - **반복 이벤트의 사진이 편집 화면에 안 보임** — 발생 id(`master@날짜`)로 조회 → master id 로 폴백(iOS 반복 이벤트 공통 identifier 동작).
-- **Google 연동 버튼이 무한 대기** — placeholder client_id 로 `getAuthToken(interactive)` 호출 시 응답 없음 → 호출 전 client_id 검사 후 즉시 안내.
+- **Google 연동 시 오류/무한 대기** — placeholder client_id 로 `getAuthToken` 호출 → 클라이언트 ID 확인 후, 로그인 계정 표시 + 권한 요청 화면, 설정 내 클라이언트 ID 입력(`launchWebAuthFlow`) 경로 추가.
 - **월 로드 경합** — 새로고침(무효화) 중 진행되던 이전 로드가 오래된 데이터를 기록할 수 있음 → 무효화 세대(gen) 비교로 폐기.
 - **E2E 브라우저 종료** — 외부 `timeout` 의 SIGTERM 을 Playwright 가 받아 브라우저를 닫은 것(크래시 아님) → 래퍼 제거, Playwright 와 같은 빌드의 Chromium 사용.
 

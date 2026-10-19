@@ -21,6 +21,7 @@ iOS·Android 앱을 쓰지 않는 사용자(데스크톱 Chrome 사용자)에게
 |------|------|
 | UI | 툴바 **팝업**(380×600, iPhone 비율) + 동일 화면 **사이드패널**(`app.html?view=panel`, 팝업 ⇥ 버튼) |
 | 이벤트 저장소 | 기본 **로컬**(`chrome.storage.local`) · 설정에서 **Google Calendar** 연동(`chrome.identity` + Calendar API v3) 선택 |
+| Google 권한 요청 | **브라우저(Chrome) 로그인 계정**으로 요청: 연동 화면에 로그인 계정(`getProfileUserInfo`)·요청 권한 표시 → `[<계정> 계정으로 권한 요청]`. manifest `oauth2.client_id` 있으면 `getAuthToken({account})`, 없으면 설정에 입력한 OAuth 클라이언트 ID(웹 애플리케이션)로 `launchWebAuthFlow`(`login_hint`=로그인 계정). 클라이언트 ID 없으면 오류 대신 확장 ID·리디렉션 URI 와 등록 절차 안내 |
 | 반복(로컬) | master 1건 + rule(`daily/weekly/yearly`, `byDay`, `until`) 저장, 조회 시 발생일 전개. 발생 단건 수정/삭제 = iOS `.thisEvent` |
 | 반복(Google) | `recurrence: [RRULE]` 로 저장, `singleEvents=true` 로 발생 단위 조회·수정·삭제 |
 | 날씨 | `navigator.geolocation` + Open-Meteo(무료·무키). WeatherKit 제외 |
@@ -75,11 +76,13 @@ workEvent(할 일·회의·세미나/컨퍼런스·회식) · medication(아침�
 
 ## 6. 리스크 / 제약
 
-- Google 연동은 Google Cloud OAuth 클라이언트(유형: Chrome 확장) 발급 + `manifest.json` `oauth2.client_id` 설정 + 확장 ID 고정(`key`)이 필요. 미설정 시 설정 화면에 안내.
+- Google API 는 앱별 OAuth 클라이언트 없이 권한 부여 불가(Google 정책). 1회 등록 필요: (A) manifest `oauth2.client_id`(Chrome 확장 유형, 확장 ID 고정) 또는 (B) 설정 화면에 웹 애플리케이션 유형 클라이언트 ID 입력(리디렉션 URI `https://<확장ID>.chromiumapp.org/`). 동의 화면 '테스트' 상태에서는 테스트 사용자로 등록된 계정만 허용.
 - Chrome 알림은 브라우저 실행 중 + OS 알림 허용 시에만 표시.
 - 로컬 저장 데이터는 브라우저 프로필 단위, 확장 삭제 시 함께 삭제(동기화 없음).
 - 사진은 `chrome.storage` 용량을 사용(`unlimitedStorage`). 카메라 직접 촬영은 데스크톱 특성상 미지원(파일 선택으로 대체).
 
 ## 변경 이력
+
+- 2026-10-19 — Google Calendar 연동 오류 대응: 브라우저 로그인 계정으로 권한 요청하는 연동 화면 추가(로그인 계정 표시·권한 요청 버튼·설정 내 클라이언트 ID 입력·등록 안내), `identity.email` 권한 추가.
 
 - 2026-10-19 — 최초 작성. 확인: 저장소=로컬+Google 연동, UI=팝업+사이드패널, 범위=날씨·알림·사진·고객지원 포함(알림/사진은 브라우저 권한 허용 시).

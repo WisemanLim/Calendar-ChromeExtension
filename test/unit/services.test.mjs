@@ -133,3 +133,61 @@ test('EventStore + Google 어댑터: todo/overdue 판정 동일', async () => {
   assert.ok(meeting.isTodo);
   assert.ok(meeting.isOverdue); // 2026-06-12 < now(2026-10)
 });
+
+// MARK: 인증 — 브라우저 로그인 계정으로 권한 요청
+import { authUrl, parseAuthRedirect, createTokenProvider, AuthSetupError, dropToken } from '../../js/platform/googleCalendar.js';
+
+function mockIdentity({ clientId = 'YOUR_OAUTH_CLIENT_ID.apps.googleusercontent.com', email = 'me@gmail.com' } = {}) {
+  const calls = { getAuthToken: [], launch: [] };
+  globalThis.chrome = {
+    runtime: { getManifest: () => ({ oauth2: { client_id: clientId } }), lastError: null },
+    identity: {
+      getProfileUserInfo: (_o, cb) => cb({ email, id: 'gid-1' }),
+      getRedirectURL: () => 'https://abc.chromiumapp.org/',
+      getAuthToken: (opts, cb) => { calls.getAuthToken.push(opts); cb({ token: 'chrome-token' }); },
+      launchWebAuthFlow: async (o) => { calls.launch.push(o); return 'https://abc.chromiumapp.org/#access_token=web-token&expires_in=3600&token_type=Bearer'; },
+      removeCachedAuthToken: (_o, cb) => cb(),
+    },
+  };
+  return calls;
+}
+
+test('authUrl: implicit token + 범위 + login_hint(로그인 계정) + prompt', () => {
+  const u = new URL(authUrl({ clientId: 'cid', redirectUri: 'https://abc.chromiumapp.org/', loginHint: 'me@gmail.com' }));
+  assert.equal(u.searchParams.get('response_type'), 'token');
+  assert.equal(u.searchParams.get('login_hint'), 'me@gmail.com');
+  assert.equal(u.searchParams.get('prompt'), 'consent');
+  assert.match(u.searchParams.get('scope'), /calendar\.events .*calendar\.readonly/);
+  assert.equal(new URL(authUrl({ clientId: 'c', redirectUri: 'r:', silent: true })).searchParams.get('prompt'), 'none');
+});
+test('parseAuthRedirect: 토큰/만료, 오류', () => {
+  const t = parseAuthRedirect('https://x.chromiumapp.org/#access_token=abc&expires_in=3600', 0);
+  assert.deepEqual(t, { token: 'abc', exp: 3540000 });
+  assert.throws(() => parseAuthRedirect('https://x.chromiumapp.org/#error=access_denied'), /access_denied/);
+});
+test('토큰: client ID 없음 → NO_CLIENT', async () => {
+  mockIdentity();
+  await assert.rejects(createTokenProvider({ clientId: () => '' })(true), (e) => e instanceof AuthSetupError && e.code === 'NO_CLIENT');
+});
+test('토큰: manifest client_id 있으면 getAuthToken(로그인 계정 id 지정)', async () => {
+  const calls = mockIdentity({ clientId: 'real.apps.googleusercontent.com' });
+  assert.equal(await createTokenProvider({ clientId: () => '' })(true), 'chrome-token');
+  assert.deepEqual(calls.getAuthToken[0].account, { id: 'gid-1' });
+  assert.equal(calls.getAuthToken[0].interactive, true);
+});
+test('토큰: 설정 client ID → launchWebAuthFlow(login_hint=로그인 계정), 캐시 재사용, 폐기', async () => {
+  const calls = mockIdentity();
+  const provider = createTokenProvider({ clientId: () => 'web-cid' });
+  assert.equal(await provider(true), 'web-token');
+  const u = new URL(calls.launch[0].url);
+  assert.equal(u.searchParams.get('client_id'), 'web-cid');
+  assert.equal(u.searchParams.get('login_hint'), 'me@gmail.com');
+  assert.equal(u.searchParams.get('redirect_uri'), 'https://abc.chromiumapp.org/');
+  assert.equal(calls.launch[0].interactive, true);
+  assert.equal(await provider(false), 'web-token');
+  assert.equal(calls.launch.length, 1, '캐시 사용');
+  await dropToken('web-token');
+  await provider(false);
+  assert.equal(calls.launch.length, 2, '폐기 후 재요청');
+  assert.equal(new URL(calls.launch[1].url).searchParams.get('prompt'), 'none');
+});

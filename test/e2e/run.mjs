@@ -20,7 +20,10 @@ let page;
 let ctx;
 let extId;
 
+const ONLY = process.env.E2E_ONLY?.split(',').map((x) => x.trim()).filter(Boolean);
+
 async function check(epic, name, fn) {
+  if (ONLY && !ONLY.some((k) => name.includes(k))) return; // 선택 실행 (E2E_ONLY=키워드1,키워드2)
   const t0 = Date.now();
   try {
     await fn();
@@ -478,13 +481,30 @@ async function main() {
     await page.locator('.sheet .toggle').first().click();
     eq(await storageGet('settings.notificationsEnabled'), true, 'ON');
   });
-  await check(8, 'Google 연동: client_id 미설정 → 오류 안내, 로컬 유지', async () => {
+  await check(8, 'Google 연동: 브라우저 로그인 계정 권한 요청 화면 · client ID 입력 → 권한 요청 버튼', async () => {
     await ensureSettings();
     await page.locator('.sheet .row[role="radio"]', { hasText: 'Google Calendar' }).click();
-    await page.locator('.sheet .caption.err').first().waitFor({ timeout: 15000 });
-    eq(await page.evaluate(() => window.__wc.ctx.settings.storageMode), 'local', '로컬 유지');
-    assert((await page.locator('.sheet .caption.err').first().textContent()).includes('client_id'), 'client_id 안내');
-    await page.waitForTimeout(2800);
+    await page.locator('.sheet .navbar .c', { hasText: 'Google Calendar 연동' }).waitFor();
+    const body = () => page.locator('.sheet').last().textContent();
+    assert((await body()).includes('브라우저 로그인 계정'), '로그인 계정 섹션');
+    assert((await body()).includes('calendar.events'), '요청 권한');
+    const extId = await page.evaluate(() => chrome.runtime.id);
+    assert((await body()).includes(extId), '확장 ID 안내');
+    assert((await body()).includes(`https://${extId}.chromiumapp.org/`), '리디렉션 URI 안내');
+    const req = page.locator('.sheet').last().locator('[aria-label="권한 요청"]');
+    assert((await req.textContent()).includes('클라이언트 ID 입력 후'), 'client ID 없을 때 안내 문구');
+    await req.click();
+    await page.locator('.sheet .caption.err', { hasText: '먼저 입력' }).waitFor();
+    await page.locator('.sheet input[aria-label="OAuth 클라이언트 ID"]').fill('123-test.apps.googleusercontent.com');
+    await page.locator('.sheet').last().locator('.btn-link', { hasText: '권한 요청' }).waitFor();
+    await page.locator('.sheet').last().locator('.navbar .l button').click(); // blur 없이 바로 뒤로
+    await page.waitForTimeout(200);
+    eq(await storageGet('settings.googleClientId'), '123-test.apps.googleusercontent.com', '붙여넣기 즉시 저장');
+    await page.locator('.sheet .row[role="radio"]', { hasText: 'Google Calendar' }).click();
+    eq(await page.locator('.sheet input[aria-label="OAuth 클라이언트 ID"]').inputValue(), '123-test.apps.googleusercontent.com', '재진입 시 값 유지');
+    await page.screenshot({ path: path.join(OUT, '08-google-connect.png') });
+    await page.locator('.sheet').last().locator('.navbar .l button').click();
+    eq(await page.evaluate(() => window.__wc.ctx.settings.storageMode), 'local', '연결 전 로컬 유지');
   });
   await check(6, '고객지원: 도움말·FAQ·일반적인 문제·동기화·디버그 로그', async () => {
     await ensureSettings();

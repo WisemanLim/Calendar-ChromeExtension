@@ -15,6 +15,7 @@ const KEYS = {
   lastSeenVersion: 'settings.lastSeenVersion',
   appColorScheme: 'settings.appColorScheme',
   storageMode: 'settings.storageMode',
+  googleClientId: 'settings.googleClientId',
 };
 
 const DEFAULTS = {
@@ -25,6 +26,7 @@ const DEFAULTS = {
   lastSeenVersion: '',
   appColorScheme: 'system',
   storageMode: 'local', // 'local' | 'google'
+  googleClientId: '', // manifest oauth2 미설정 시 사용하는 OAuth 클라이언트 ID (웹 애플리케이션 유형)
 };
 
 export function currentVersion() {

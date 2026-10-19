@@ -102,9 +102,9 @@ function syncGuide() {
   openSheet({ title: '동기화 문제 해결', push: true }).setBody(
     section('Google 캘린더 연동 단계', [
       step(1, 'Chrome 에 Google 계정으로 로그인'),
-      step(2, 'Wise Calendar 설정(⚙) → 캘린더 연동'),
-      step(3, "'Google Calendar' 선택"),
-      step(4, 'Google 계정 동의 화면에서 캘린더 권한 허용'),
+      step(2, 'Wise Calendar 설정(⚙) → 캘린더 연동 → Google Calendar'),
+      step(3, '연동 화면에서 로그인 계정 확인 (최초 1회: OAuth 클라이언트 ID 입력)'),
+      step(4, "'<계정> 계정으로 권한 요청' → 동의 화면에서 캘린더 권한 허용"),
       step(5, '표시할 캘린더 선택 → 이벤트 자동 표시'),
     ]),
     section('연동이 안 될 때', [

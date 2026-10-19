@@ -1,0 +1,20 @@
+[
+  {
+    "epic": 6,
+    "name": "최초 실행 시 온보딩 4단계 → 시작하기",
+    "ok": true,
+    "ms": 3828
+  },
+  {
+    "epic": 8,
+    "name": "Google 연동: 브라우저 로그인 계정 권한 요청 화면 · client ID 입력 → 권한 요청 버튼",
+    "ok": true,
+    "ms": 2782
+  },
+  {
+    "epic": 6,
+    "name": "사이드패널 페이지(app.html?view=panel) 렌더",
+    "ok": true,
+    "ms": 8183
+  }
+]

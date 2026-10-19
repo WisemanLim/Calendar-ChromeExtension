@@ -5,7 +5,7 @@ import { AppSettings } from './platform/settings.js';
 import { TemplateStore } from './platform/templateStore.js';
 import { EventStore } from './platform/eventStore.js';
 import { LocalCalendar } from './platform/localCalendar.js';
-import { GoogleCalendar, chromeToken, dropToken } from './platform/googleCalendar.js';
+import { GoogleCalendar, createTokenProvider, dropToken, profileAccount } from './platform/googleCalendar.js';
 import { WeatherService } from './platform/weather.js';
 import { CalendarView } from './ui/calendarView.js';
 import { showOnboarding } from './ui/onboarding.js';
@@ -16,7 +16,9 @@ document.body.classList.add(isPanel ? 'panel' : 'popup');
 async function boot() {
   const settings = await new AppSettings().load();
   const templates = await new TemplateStore().load();
-  const google = () => new GoogleCalendar({ enabledIds: () => settings.enabledCalendarIDs });
+  // 브라우저 로그인 계정으로 권한 요청하는 토큰 제공자 (manifest client_id 또는 설정의 client ID)
+  const googleToken = createTokenProvider({ clientId: () => settings.googleClientId });
+  const google = () => new GoogleCalendar({ enabledIds: () => settings.enabledCalendarIDs, token: googleToken });
   const events = await new EventStore(settings.storageMode === 'google' ? google() : new LocalCalendar()).init();
   const weather = await new WeatherService().loadCache();
 
@@ -38,8 +40,9 @@ async function boot() {
       if (s === 'system') delete document.documentElement.dataset.theme;
       else document.documentElement.dataset.theme = s;
     },
+    profileAccount,
     async connectGoogle() {
-      await chromeToken(true); // 로그인/동의
+      await googleToken(true); // Chrome 로그인 계정으로 동의 화면
       const adapter = google();
       await adapter.calendars(); // 연결 확인
       await settings.set('storageMode', 'google');
@@ -47,7 +50,7 @@ async function boot() {
       await events.refresh();
     },
     async useLocal(signOut = false) {
-      if (signOut) await chromeToken(false).then(dropToken).catch(() => {});
+      if (signOut) await googleToken(false).then((t) => dropToken(t)).catch(() => dropToken(null));
       await settings.set('storageMode', 'local');
       events.setAdapter(new LocalCalendar());
       await events.refresh();

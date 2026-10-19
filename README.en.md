@@ -27,19 +27,16 @@ Ported from the iOS sources (`Calendar-iOS/Calendar/*.swift`). The UI text is Ko
 
 Store package: `make package` → `dist/wise-calendar-<version>.zip`
 
-## Google Calendar setup (optional)
+## Google Calendar sync (optional)
 
-Not needed for local storage. Google sync needs an OAuth client.
+Settings (⚙) → 캘린더 연동 → **Google Calendar** opens the sync screen. It shows the account signed in to Chrome, the permissions requested (`calendar.events`, `calendar.readonly`) and a `[request permission as <account>]` button that opens Google's consent screen for that account.
 
-1. Pin the extension ID by adding a `"key"` to `manifest.json` (the Web Store pins it on upload)
-2. In [Google Cloud Console](https://console.cloud.google.com/), enable the **Google Calendar API**
-3. Configure the OAuth consent screen with scopes `calendar.events` and `calendar.readonly`
-4. Credentials → **OAuth client ID** → type **Chrome extension** → item ID = the extension ID
-5. Replace `YOUR_OAUTH_CLIENT_ID...` in `manifest.json` → `oauth2.client_id`, then reload the extension
-6. In the extension: Settings (⚙) → 캘린더 연동 → **Google Calendar** → consent → choose calendars to show
+Google requires an OAuth client per app (one-time setup). Either:
 
-Without a client ID, Settings shows `OAuth client_id 미설정` and stays on local storage.
-New events go to the primary calendar; local events are not migrated to Google.
+- **B) Paste a client ID in the sync screen (no manifest edit, recommended)** — enable the Google Calendar API, configure the consent screen (add your account as a test user while in testing), create an OAuth client of type **Web application** with the redirect URI shown on the screen (`https://<extension-id>.chromiumapp.org/`), then paste the client ID and request permission. The signed-in account is pre-selected (`login_hint`).
+- **A) Chrome-extension client in the manifest** — pin the extension ID with `"key"`, create a client of type **Chrome extension**, and replace `oauth2.client_id`. Permission is then requested with `getAuthToken` for the Chrome account.
+
+Without a client ID the screen shows these steps with copy buttons for the extension ID and redirect URI instead of an error. New events go to the primary calendar; local events are not migrated.
 
 ## Permissions
 
@@ -48,7 +45,7 @@ New events go to the primary calendar; local events are not migrated to Google.
 | `storage`, `unlimitedStorage` | Settings, templates, local events, photos |
 | `alarms`, `notifications` | 09:00 reminders |
 | `sidePanel` | Side panel |
-| `identity` | Google sign-in (sync only) |
+| `identity`, `identity.email` | Google permission request, show the signed-in account (sync only) |
 | `geolocation` | Location for weather |
 | hosts `api.open-meteo.com`, `www.googleapis.com` | Weather, Google Calendar API |
 
@@ -111,7 +108,7 @@ After those changes the unit tests pass 49/49; the E2E rerun was slowed by syste
 
 - **Sheets and onboarding vanished on re-render** — the main view redrew all of `#app`, including overlays → the main view now renders into its own `.main-host`.
 - **Photos missing on recurring events** — occurrence ids (`master@date`) were looked up → fall back to the master id, matching the iOS shared identifier.
-- **Google button hung** — `getAuthToken(interactive)` never answers with the placeholder client ID → the client ID is checked first and the user is told.
+- **Google sync error / hang** — `getAuthToken` with the placeholder client ID → client ID check, a consent screen for the signed-in account, and a client ID field in Settings (`launchWebAuthFlow`).
 - **Month-load race** — a load started before a refresh could write stale data → loads from an older invalidation generation are discarded.
 - **E2E browser "crash"** — an outer `timeout` sent SIGTERM and Playwright closed the browser → no wrapper, and a Chromium build matching Playwright.
 
