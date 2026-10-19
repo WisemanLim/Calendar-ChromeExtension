@@ -1,0 +1,44 @@
+[
+  {
+    "epic": 6,
+    "name": "최초 실행 시 온보딩 4단계 → 시작하기",
+    "ok": true,
+    "ms": 3077
+  },
+  {
+    "epic": 6,
+    "name": "재실행 시 온보딩 미노출",
+    "ok": true,
+    "ms": 2273
+  },
+  {
+    "epic": 6,
+    "name": "설정: 입력 방식 변경 영속 + 설명",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "화면 테마 순환 system→dark→light→system",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "알림 토글 OFF/ON 영속",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "고객지원: 도움말·FAQ·일반적인 문제·동기화·디버그 로그",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "사이드패널 페이지(app.html?view=panel) 렌더",
+    "ok": false,
+    "error": "page.setViewportSize: Target page, context or browser has been closed"
+  }
+]

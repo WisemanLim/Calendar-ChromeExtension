@@ -1,0 +1,74 @@
+[
+  {
+    "epic": 3,
+    "name": "헤더: 연도·MONTH YEAR·Today 미노출(오늘)",
+    "ok": true,
+    "ms": 32
+  },
+  {
+    "epic": 3,
+    "name": "주간 스트립 7셀(일~토) + 선택일 강조 + 날씨 아이콘(Open-Meteo)",
+    "ok": true,
+    "ms": 149
+  },
+  {
+    "epic": 3,
+    "name": "음력 표시 (정보 바 좌측)",
+    "ok": true,
+    "ms": 289
+  },
+  {
+    "epic": 3,
+    "name": "월 이동 › → Today 노출 → Today 복귀",
+    "ok": true,
+    "ms": 398
+  },
+  {
+    "epic": 3,
+    "name": "연 이동 ›/‹",
+    "ok": true,
+    "ms": 30411
+  },
+  {
+    "epic": 3,
+    "name": "미니 달력 2개(현재·다음 월) + 날짜 클릭 선택",
+    "ok": true,
+    "ms": 783
+  },
+  {
+    "epic": 3,
+    "name": "히어로 좌 스와이프 → 익일, 우 스와이프 → 전일",
+    "ok": true,
+    "ms": 3001
+  },
+  {
+    "epic": 3,
+    "name": "주간 스트립 스와이프 ±7일",
+    "ok": true,
+    "ms": 2946
+  },
+  {
+    "epic": 3,
+    "name": "미니 달력 스와이프 → 월 이동",
+    "ok": true,
+    "ms": 2275
+  },
+  {
+    "epic": 3,
+    "name": "이벤트 수 무지개 색: 미니 달력 숫자·점 + 히어로",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 3,
+    "name": "아래로 당기기 → 새로고침(날씨 강제 재조회)",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 3,
+    "name": "메인 스크린샷 + 페이지 오류 없음",
+    "ok": false,
+    "error": "page.screenshot: Target page, context or browser has been closed"
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "epic": 6,
+    "name": "최초 실행 시 온보딩 4단계 → 시작하기",
+    "ok": true,
+    "ms": 3077
+  },
+  {
+    "epic": 6,
+    "name": "재실행 시 온보딩 미노출",
+    "ok": true,
+    "ms": 2273
+  },
+  {
+    "epic": 3,
+    "name": "헤더: 연도·MONTH YEAR·Today 미노출(오늘)",
+    "ok": true,
+    "ms": 32
+  },
+  {
+    "epic": 3,
+    "name": "주간 스트립 7셀(일~토) + 선택일 강조 + 날씨 아이콘(Open-Meteo)",
+    "ok": true,
+    "ms": 149
+  },
+  {
+    "epic": 3,
+    "name": "음력 표시 (정보 바 좌측)",
+    "ok": true,
+    "ms": 289
+  },
+  {
+    "epic": 3,
+    "name": "월 이동 › → Today 노출 → Today 복귀",
+    "ok": true,
+    "ms": 398
+  },
+  {
+    "epic": 3,
+    "name": "연 이동 ›/‹",
+    "ok": true,
+    "ms": 30411
+  },
+  {
+    "epic": 3,
+    "name": "미니 달력 2개(현재·다음 월) + 날짜 클릭 선택",
+    "ok": true,
+    "ms": 783
+  },
+  {
+    "epic": 3,
+    "name": "히어로 좌 스와이프 → 익일, 우 스와이프 → 전일",
+    "ok": true,
+    "ms": 3001
+  },
+  {
+    "epic": 3,
+    "name": "주간 스트립 스와이프 ±7일",
+    "ok": true,
+    "ms": 2946
+  },
+  {
+    "epic": 3,
+    "name": "미니 달력 스와이프 → 월 이동",
+    "ok": true,
+    "ms": 2275
+  },
+  {
+    "epic": 4,
+    "name": "개인이벤트 ＋: 복용 아침 약 → 프리셋·자동 yearly 저장",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "약속: 비밀 약속 + 장소 → [비밀] 흐린 표시(opacity .25)",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "고정: 정기작업 반복 + 개별 등록 → 날짜별 패턴 치환 이벤트 3건",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "＋ 롱프레스 → 1회 입력방식 선택(현재 모드 제외) → 일기: 제목 자동·경과시간·시작/종료 기록",
+    "ok": false,
+    "error": "locator.boundingBox: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "히어로 더블클릭 → 에디터, 히어로 롱프레스 → 입력방식 선택",
+    "ok": false,
+    "error": "locator.boundingBox: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "업무 이벤트 할 일(어제 기한) → 체크리스트 인코딩 + 기한 초과 적색",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "업무 이벤트 회의: 시작/종료 + 장소",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "복용 사진 첨부(파일) → 미리보기 → 저장 시 eventImage 보관 + 편집 화면 표시",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 7,
+    "name": "알림 ON + 미래 이벤트 저장 → 당일 09:00 chrome.alarms 예약",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 7,
+    "name": "서비스 워커: 알람 발화 → chrome.notifications 생성",
+    "ok": false,
+    "error": "worker.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "이벤트 클릭 → 편집: 시작 변경 시 종료 = 원본 간격 유지",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "우클릭 컨텍스트 메뉴 → 복사(내용제외) → 목표 날짜",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "롱프레스 메뉴 → 반복복사(내용포함) 3일",
+    "ok": false,
+    "error": "locator.boundingBox: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "반복 이벤트 발생 단건 삭제(해당일만)",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "검색: 제목·메모 → 결과 클릭 → 해당 날짜 이동 / 결과 없음",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 3,
+    "name": "이벤트 수 무지개 색: 미니 달력 숫자·점 + 히어로",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 3,
+    "name": "아래로 당기기 → 새로고침(날씨 강제 재조회)",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "설정: 입력 방식 변경 영속 + 설명",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "화면 테마 순환 system→dark→light→system",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "알림 토글 OFF/ON 영속",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 8,
+    "name": "Google 연동: client_id 미설정 → 오류 안내, 로컬 유지",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "고객지원: 도움말·FAQ·일반적인 문제·동기화·디버그 로그",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 6,
+    "name": "사이드패널 페이지(app.html?view=panel) 렌더",
+    "ok": false,
+    "error": "page.setViewportSize: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 3,
+    "name": "메인 스크린샷 + 페이지 오류 없음",
+    "ok": false,
+    "error": "page.screenshot: Target page, context or browser has been closed"
+  }
+]

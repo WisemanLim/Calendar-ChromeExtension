@@ -1,0 +1,55 @@
+
+> wise-calendar-chrome-extension@1.0.0 test
+> node --test "test/unit/*.test.mjs"
+
+✔ dateKey 형식/0 패딩 (329.897958ms)
+✔ 그리드 항상 42칸 (171.960625ms)
+✔ 일요일 시작 월은 선행 빈칸 없음 (2025-06) (211.575208ms)
+✔ 토요일 시작 월은 선행 6칸 (2025-11) (0.162917ms)
+✔ 2026-02 당월 28일 (10.236667ms)
+✔ today / selected / eventCount 주입 (0.175625ms)
+✔ addMonths 말일 클램프 (0.091125ms)
+✔ weekDates 일~토 (0.0805ms)
+✔ combine 날짜+시각 (0.093917ms)
+✔ dayOfYear (34.206291ms)
+✔ fixedTitle / parse (40.71875ms)
+✔ todo 인코딩/디코딩 (0.214625ms)
+✔ isTodo / isOverdue (0.0955ms)
+✔ 타이틀 날짜 패턴 치환 (0.135667ms)
+✔ 시드 템플릿 v3 15개 / 카테고리 분포 (286.24875ms)
+✔ 템플릿 하위호환(isTodo 누락) / fixedDisplayTitle (0.091625ms)
+✔ 반복 없음: 범위 내 1회 (0.133792ms)
+✔ yearly 무기한: 매년 같은 날, 시작 이전 제외 (0.084417ms)
+✔ daily until 포함 + exdates 제외 (0.131833ms)
+✔ weekly byDay(월,수) / byDay 비면 시작 요일 (40.157292ms)
+✔ toRRULE (14.209166ms)
+✔ 이모지 / 무지개 색 / 히어로 색 (176.624375ms)
+✔ displayTitle HH:mm 제목 (4.078875ms)
+✔ 음력 (Intl chinese) — iOS 캡처 2026-06-12 = 음력 4월 27일, 윤달 (365.138042ms)
+✔ WMO 코드 매핑 (0.451167ms)
+(node:59280) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ settings 기본값 (iOS AppSettings 준용) + 영속 (22.637125ms)
+✔ 온보딩 재노출: 버전 변경 (0.180584ms)
+✔ templates.v3 시드 → 수정 영속 (62.9545ms)
+✔ 로컬: 추가/조회/수정/삭제 (254.066125ms)
+✔ 로컬: 반복 발생 단건 삭제/수정 = thisEvent (1.582292ms)
+✔ EventStore: 월 로드·일별 정렬·수 캐시·todo/overdue/비밀·검색 (2.565542ms)
+✔ EventStore: 삭제 시 첨부 사진도 삭제 (0.548666ms)
+✔ diary: 시작=에디터 오픈, 종료=저장 시각 (0.257833ms)
+✔ 업무 할 일: 체크리스트 인코딩, Due Date 시작=종료 (0.139542ms)
+✔ 업무 회의: 시작/종료 + 장소, 종료<=시작이면 +1h (0.177791ms)
+✔ 약속: 비밀 약속 제목 그대로, 장소 저장 (0.110041ms)
+✔ 복용: 패턴 없음 + 반복 off → 자동 yearly (1.190459ms)
+✔ 고정: 날짜 패턴 + 반복 off → 반복 없음, 치환 (0.083959ms)
+✔ 고정: 반복 + 개별 등록 ON → 날짜별 개별 이벤트 (0.455709ms)
+✔ 복용: 반복 + 개별 OFF → 주간 RRULE (요일, until) (0.209083ms)
+✔ 개인 이벤트: 템플릿 없음/제목 없음 → 저장 불가 (0.126375ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4881.559333

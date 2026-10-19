@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Wise Calendar",
+  "short_name": "WiseCal",
+  "version": "1.0.0",
+  "description": "큰 날짜 + 템플릿(복용·약속·고정/반복)으로 빠르게 기록하는 미니멀 플래너. 로컬 또는 Google Calendar 연동.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Wise Calendar",
+    "default_popup": "app.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "app.html?view=panel"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "unlimitedStorage", "alarms", "notifications", "sidePanel", "identity", "geolocation"],
+  "host_permissions": ["https://api.open-meteo.com/*", "https://www.googleapis.com/*"],
+  "oauth2": {
+    "client_id": "YOUR_OAUTH_CLIENT_ID.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

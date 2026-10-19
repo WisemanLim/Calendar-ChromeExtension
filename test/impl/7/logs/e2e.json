@@ -1,0 +1,14 @@
+[
+  {
+    "epic": 7,
+    "name": "알림 ON + 미래 이벤트 저장 → 당일 09:00 chrome.alarms 예약",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 7,
+    "name": "서비스 워커: 알람 발화 → chrome.notifications 생성",
+    "ok": false,
+    "error": "worker.evaluate: Target page, context or browser has been closed"
+  }
+]

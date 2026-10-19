@@ -1,0 +1,62 @@
+✔ dateKey 형식/0 패딩 (5.631042ms)
+✔ 그리드 항상 42칸 (1.566958ms)
+✔ 일요일 시작 월은 선행 빈칸 없음 (2025-06) (0.132375ms)
+✔ 토요일 시작 월은 선행 6칸 (2025-11) (0.090458ms)
+✔ 2026-02 당월 28일 (0.194792ms)
+✔ today / selected / eventCount 주입 (0.18ms)
+✔ addMonths 말일 클램프 (0.093834ms)
+✔ weekDates 일~토 (0.396125ms)
+✔ combine 날짜+시각 (0.183333ms)
+✔ dayOfYear (0.281458ms)
+✔ fixedTitle / parse (1.873875ms)
+✔ todo 인코딩/디코딩 (0.334042ms)
+✔ isTodo / isOverdue (0.205542ms)
+✔ 타이틀 날짜 패턴 치환 (0.256542ms)
+✔ 시드 템플릿 v3 15개 / 카테고리 분포 (6.771ms)
+✔ 템플릿 하위호환(isTodo 누락) / fixedDisplayTitle (0.252458ms)
+✔ 반복 없음: 범위 내 1회 (0.381209ms)
+✔ yearly 무기한: 매년 같은 날, 시작 이전 제외 (0.177ms)
+✔ daily until 포함 + exdates 제외 (0.1055ms)
+✔ weekly byDay(월,수) / byDay 비면 시작 요일 (0.18675ms)
+✔ toRRULE (0.662875ms)
+✔ 이모지 / 무지개 색 / 히어로 색 (0.202ms)
+✔ displayTitle HH:mm 제목 (0.155708ms)
+✔ 음력 (Intl chinese) — iOS 캡처 2026-06-12 = 음력 4월 27일, 윤달 (438.716208ms)
+✔ WMO 코드 매핑 (0.136209ms)
+[Weather] 위치 권한 거부/실패 — 날씨 조회 불가 denied
+(node:57657) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Open-Meteo 파싱 (+구버전 weathercode) (7.704958ms)
+✔ 날씨: 당일 캐시 있으면 미조회, force/새 날이면 조회, 위치 거부 시 비어 있음 (34.174417ms)
+✔ 알림: 당일 09:00 예약, 지난 시각은 미예약 (195.116125ms)
+✔ Google: 401 → 토큰 폐기 후 재시도, 캘린더 목록/primary (3.0945ms)
+✔ Google: 조회(singleEvents, 취소 제외, 종일=로컬 자정) + 표시 캘린더 필터 (32.411416ms)
+✔ Google: 추가(primary, RRULE)/수정(PATCH, recurrence 없음)/삭제 (246.308959ms)
+✔ Google 변환: fromGoogle / toGoogle timeZone (0.335458ms)
+✔ EventStore + Google 어댑터: todo/overdue 판정 동일 (1.319458ms)
+(node:57658) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ settings 기본값 (iOS AppSettings 준용) + 영속 (1.995667ms)
+✔ 온보딩 재노출: 버전 변경 (0.209375ms)
+✔ templates.v3 시드 → 수정 영속 (391.63925ms)
+✔ 로컬: 추가/조회/수정/삭제 (8.655625ms)
+✔ 로컬: 반복 발생 단건 삭제/수정 = thisEvent (2.303125ms)
+✔ EventStore: 월 로드·일별 정렬·수 캐시·todo/overdue/비밀·검색 (106.221125ms)
+✔ EventStore: 삭제 시 첨부 사진도 삭제 (0.392208ms)
+✔ diary: 시작=에디터 오픈, 종료=저장 시각 (0.702ms)
+✔ 업무 할 일: 체크리스트 인코딩, Due Date 시작=종료 (0.528792ms)
+✔ 업무 회의: 시작/종료 + 장소, 종료<=시작이면 +1h (0.606125ms)
+✔ 약속: 비밀 약속 제목 그대로, 장소 저장 (0.867667ms)
+✔ 복용: 패턴 없음 + 반복 off → 자동 yearly (0.370916ms)
+✔ 고정: 날짜 패턴 + 반복 off → 반복 없음, 치환 (0.23375ms)
+✔ 고정: 반복 + 개별 등록 ON → 날짜별 개별 이벤트 (0.525916ms)
+✔ 복용: 반복 + 개별 OFF → 주간 RRULE (요일, until) (0.371333ms)
+✔ 개인 이벤트: 템플릿 없음/제목 없음 → 저장 불가 (0.290875ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10796.189

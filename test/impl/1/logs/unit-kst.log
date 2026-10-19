@@ -1,0 +1,37 @@
+
+> wise-calendar-chrome-extension@1.0.0 test
+> node --test "test/unit/*.test.mjs"
+
+✔ dateKey 형식/0 패딩 (10.973292ms)
+✔ 그리드 항상 42칸 (4.249459ms)
+✔ 일요일 시작 월은 선행 빈칸 없음 (2025-06) (0.185334ms)
+✔ 토요일 시작 월은 선행 6칸 (2025-11) (0.099792ms)
+✔ 2026-02 당월 28일 (0.101541ms)
+✔ today / selected / eventCount 주입 (0.147834ms)
+✔ addMonths 말일 클램프 (0.07975ms)
+✔ weekDates 일~토 (0.072708ms)
+✔ combine 날짜+시각 (0.093042ms)
+✔ dayOfYear (0.287833ms)
+✔ fixedTitle / parse (1.590833ms)
+✔ todo 인코딩/디코딩 (0.449333ms)
+✔ isTodo / isOverdue (0.978417ms)
+✔ 타이틀 날짜 패턴 치환 (0.163458ms)
+✔ 시드 템플릿 v3 15개 / 카테고리 분포 (16.835125ms)
+✔ 템플릿 하위호환(isTodo 누락) / fixedDisplayTitle (0.1665ms)
+✔ 반복 없음: 범위 내 1회 (0.149375ms)
+✔ yearly 무기한: 매년 같은 날, 시작 이전 제외 (0.089583ms)
+✔ daily until 포함 + exdates 제외 (0.071667ms)
+✔ weekly byDay(월,수) / byDay 비면 시작 요일 (0.092708ms)
+✔ toRRULE (0.365416ms)
+✔ 이모지 / 무지개 색 / 히어로 색 (0.080625ms)
+✔ displayTitle HH:mm 제목 (0.053375ms)
+✔ 음력 (Intl chinese) — iOS 캡처 2026-06-12 = 음력 4월 27일, 윤달 (125.604416ms)
+✔ WMO 코드 매핑 (0.185333ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3304.325792

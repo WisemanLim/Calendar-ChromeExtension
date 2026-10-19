@@ -1,0 +1,8 @@
+[
+  {
+    "epic": 8,
+    "name": "Google 연동: client_id 미설정 → 오류 안내, 로컬 유지",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  }
+]

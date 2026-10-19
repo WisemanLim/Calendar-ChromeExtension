@@ -1,0 +1,12 @@
+{
+  "name": "wise-calendar-chrome-extension",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wise Calendar — Chrome Extension (MV3) port of the iOS Wise Calendar planner",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"test/unit/*.test.mjs\"",
+    "e2e": "node test/e2e/run.mjs",
+    "package": "make package"
+  }
+}

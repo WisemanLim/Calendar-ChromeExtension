@@ -1,0 +1,50 @@
+[
+  {
+    "epic": 4,
+    "name": "개인이벤트 ＋: 복용 아침 약 → 프리셋·자동 yearly 저장",
+    "ok": false,
+    "error": "locator.count: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "약속: 비밀 약속 + 장소 → [비밀] 흐린 표시(opacity .25)",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "고정: 정기작업 반복 + 개별 등록 → 날짜별 패턴 치환 이벤트 3건",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "＋ 롱프레스 → 1회 입력방식 선택(현재 모드 제외) → 일기: 제목 자동·경과시간·시작/종료 기록",
+    "ok": false,
+    "error": "locator.boundingBox: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "히어로 더블클릭 → 에디터, 히어로 롱프레스 → 입력방식 선택",
+    "ok": false,
+    "error": "locator.boundingBox: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "업무 이벤트 할 일(어제 기한) → 체크리스트 인코딩 + 기한 초과 적색",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "업무 이벤트 회의: 시작/종료 + 장소",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 4,
+    "name": "복용 사진 첨부(파일) → 미리보기 → 저장 시 eventImage 보관 + 편집 화면 표시",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  }
+]

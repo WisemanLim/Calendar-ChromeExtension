@@ -1,0 +1,32 @@
+[
+  {
+    "epic": 5,
+    "name": "이벤트 클릭 → 편집: 시작 변경 시 종료 = 원본 간격 유지",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "우클릭 컨텍스트 메뉴 → 복사(내용제외) → 목표 날짜",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "롱프레스 메뉴 → 반복복사(내용포함) 3일",
+    "ok": false,
+    "error": "locator.boundingBox: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "반복 이벤트 발생 단건 삭제(해당일만)",
+    "ok": false,
+    "error": "page.evaluate: Target page, context or browser has been closed"
+  },
+  {
+    "epic": 5,
+    "name": "검색: 제목·메모 → 결과 클릭 → 해당 날짜 이동 / 결과 없음",
+    "ok": false,
+    "error": "locator.click: Target page, context or browser has been closed"
+  }
+]
